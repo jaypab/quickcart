@@ -25,7 +25,7 @@ A modern, responsive e-commerce web application built with React and Vite. Quick
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/quickcart.git
+git clone https://github.com/jaypab/quickcart.git
 cd quickcart
 ```
 
@@ -86,7 +86,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Your Name**
+**Jay Pabua**
 - GitHub: https://github.com/jaypab
 
 ## 🙏 Acknowledgments
