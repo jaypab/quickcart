@@ -3,35 +3,54 @@ export const products = [
     id: 1,
     name: "Wireless Headphones",
     price: 79.99,
+    description: "Premium noise-canceling headphones with 30-hour battery life and crystal-clear sound quality.",
     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
+    category: "Audio",
     stock: 15
   },
   {
     id: 2,
     name: "Smart Watch",
     price: 199.99,
+    description: "Feature-packed smartwatch with fitness tracking, heart rate monitor, and water resistance.",
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+    category: "Wearables",
     stock: 8
   },
   {
     id: 3,
     name: "Laptop Stand",
     price: 49.99,
+    description: "Ergonomic aluminum laptop stand with adjustable height for comfortable working posture.",
     image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400",
+    category: "Accessories",
     stock: 20
   },
   {
     id: 4,
     name: "Mechanical Keyboard",
     price: 129.99,
+    description: "RGB backlit mechanical keyboard with tactile switches for the ultimate typing experience.",
     image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
+    category: "Accessories",
     stock: 12
   },
   {
     id: 5,
     name: "USB-C Hub",
     price: 34.99,
+    description: "7-in-1 USB-C hub with 4K HDMI, USB 3.0 ports, SD card reader, and 100W power delivery.",
     image: "https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400",
+    category: "Accessories",
     stock: 25
+  },
+  {
+    id: 6,
+    name: "Wireless Mouse",
+    price: 39.99,
+    description: "Precision wireless mouse with ergonomic design and long-lasting battery.",
+    image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400",
+    category: "Accessories",
+    stock: 0
   }
 ];
