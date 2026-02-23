@@ -640,9 +640,44 @@ body {
    PRODUCT LIST & CARDS
    =============================================== */
 .product-list h2 {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   color: var(--text-primary);
   font-size: 1.8rem;
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.category-btn {
+  padding: 8px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 50px;
+  background: white;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.category-btn:hover {
+  border-color: var(--primary-solid);
+  color: var(--primary-solid);
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.category-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: transparent;
+  box-shadow: var(--shadow);
 }
 
 .product-grid {
