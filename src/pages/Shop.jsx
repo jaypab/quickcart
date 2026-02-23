@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 function Shop() {
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const { currentUser } = useAuth();
 
     const toggleCart = () => {
@@ -14,7 +15,12 @@ function Shop() {
 
     return (
         <div className="shop-page">
-            <Header onCartToggle={toggleCart} isCartOpen={isCartOpen} />
+            <Header
+                onCartToggle={toggleCart}
+                isCartOpen={isCartOpen}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+            />
 
             <main className="shop-content">
                 <div className="welcome-section">
@@ -22,7 +28,7 @@ function Shop() {
                     <p>Discover amazing products and add them to your cart</p>
                 </div>
 
-                <ProductList />
+                <ProductList searchQuery={searchQuery} />
             </main>
 
             <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />

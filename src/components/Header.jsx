@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
+import { products } from '../data/products';
 import ConfirmDialog from './ConfirmDialog';
 import { toast } from 'react-toastify';
 
-function Header({ onCartToggle, isCartOpen }) {
+function Header({ onCartToggle, isCartOpen, searchQuery, onSearchChange }) {
     const { currentUser, logout } = useAuth();
     const { cartCount } = useCart();
     const navigate = useNavigate();
     const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const searchRef = useRef(null);
 
     const handleLogout = () => {
         logout();
@@ -25,6 +28,43 @@ function Header({ onCartToggle, isCartOpen }) {
         return username ? username.substring(0, 2).toUpperCase() : 'U';
     };
 
+    // Filter products based on search query
+    const filteredProducts = searchQuery.trim()
+        ? products.filter(product =>
+            product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        : [];
+
+    const showDropdown = isSearchFocused && searchQuery.trim().length > 0;
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (searchRef.current && !searchRef.current.contains(e.target)) {
+                setIsSearchFocused(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleResultClick = (productName) => {
+        onSearchChange(productName);
+        setIsSearchFocused(false);
+        // Scroll to the product grid
+        const productGrid = document.querySelector('.product-grid');
+        if (productGrid) {
+            productGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    const clearSearch = () => {
+        onSearchChange('');
+        setIsSearchFocused(false);
+    };
+
     return (
         <>
             <header className="main-header">
@@ -34,6 +74,67 @@ function Header({ onCartToggle, isCartOpen }) {
                         <nav className="breadcrumb">
                             <span>Home</span> / <span className="active">Shop</span>
                         </nav>
+                    </div>
+
+                    <div className="header-search" ref={searchRef}>
+                        <div className="search-input-wrapper">
+                            <span className="search-icon">🔍</span>
+                            <input
+                                type="text"
+                                className="search-input"
+                                placeholder="Search products..."
+                                value={searchQuery}
+                                onChange={(e) => onSearchChange(e.target.value)}
+                                onFocus={() => setIsSearchFocused(true)}
+                                aria-label="Search products"
+                            />
+                            {searchQuery && (
+                                <button
+                                    className="search-clear"
+                                    onClick={clearSearch}
+                                    aria-label="Clear search"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
+
+                        {showDropdown && (
+                            <div className="search-dropdown">
+                                {filteredProducts.length > 0 ? (
+                                    <>
+                                        <div className="search-dropdown-header">
+                                            {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''} found
+                                        </div>
+                                        {filteredProducts.map(product => (
+                                            <div
+                                                key={product.id}
+                                                className="search-result-item"
+                                                onClick={() => handleResultClick(product.name)}
+                                            >
+                                                <img
+                                                    src={product.image}
+                                                    alt={product.name}
+                                                    className="search-result-image"
+                                                />
+                                                <div className="search-result-info">
+                                                    <span className="search-result-name">{product.name}</span>
+                                                    <span className="search-result-category">{product.category}</span>
+                                                </div>
+                                                <span className="search-result-price">
+                                                    ${product.price.toFixed(2)}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <div className="search-no-results">
+                                        <span>😕</span>
+                                        <p>No products found for "<strong>{searchQuery}</strong>"</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     <div className="header-right">
@@ -82,3 +183,4 @@ function Header({ onCartToggle, isCartOpen }) {
 }
 
 export default Header;
+
